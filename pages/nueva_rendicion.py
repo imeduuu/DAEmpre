@@ -45,24 +45,24 @@ def render_nueva():
         if dias_diferencia > DIAS_PLAZO_COMPROBANTE:
             st.error(f"⚠ **BR-09:** El comprobante tiene {dias_diferencia} días de antigüedad (máximo 30). Requerirá aprobación especial de Gerencia.")
 
-        submitted = st.form_submit_button("📤 Enviar rendición", use_container_width=True, type="primary")
+        submitted = st.form_submit_button("Enviar rendición", use_container_width=True, type="primary")
 
     if submitted:
         errores = []
 
         # BR-06: descripción mínima
         if len(descripcion.strip()) < DESCRIPCION_MIN_CHARS:
-            errores.append(f"❌ **BR-06:** La descripción debe tener al menos {DESCRIPCION_MIN_CHARS} caracteres (tiene {len(descripcion.strip())}).")
+            errores.append(f"**BR-06:** La descripción debe tener al menos {DESCRIPCION_MIN_CHARS} caracteres (tiene {len(descripcion.strip())}).")
 
         # BR-07: monto > 0
         if monto <= 0:
-            errores.append("❌ **BR-07:** El monto debe ser mayor a $0.")
+            errores.append("**BR-07:** El monto debe ser mayor a $0.")
 
         if not categoria:
-            errores.append("❌ Debes seleccionar una categoría.")
+            errores.append("Debes seleccionar una categoría.")
 
         if archivo is None:
-            errores.append("❌ Debes adjuntar el comprobante.")
+            errores.append("Debes adjuntar el comprobante.")
 
         # BR-09: fecha dentro de plazo
         dias_dif = (date.today() - fecha_comp).days
@@ -74,7 +74,7 @@ def render_nueva():
                 r["categoria"] == categoria and
                 r["fecha_comprobante"] == str(fecha_comp) and
                 r["estado"] not in ("Rechazado", "Cancelado")):
-                errores.append(f"❌ **Duplicado detectado:** Ya existe la rendición {r['id']} con el mismo monto, categoría y fecha.")
+                errores.append(f"**Duplicado detectado:** Ya existe la rendición {r['id']} con el mismo monto, categoría y fecha.")
                 break
 
         if errores:
@@ -114,11 +114,11 @@ def render_nueva():
 
             elif monto > MONTO_UMBRAL_GERENCIA:
                 nueva["estado"] = "Pendiente"
-                nueva["historial"][1]["nota"] += " ⚠ BR-05: Monto > $500.000, requerirá aprobación de Gerencia tras Supervisora."
+                nueva["historial"][1]["nota"] += " BR-05: Monto > $500.000, requerirá aprobación de Gerencia tras Supervisora."
                 add_notif("warning", f"{rid}: Monto {fmt_monto(monto)} > $500.000 detectado.")
             else:
                 add_notif("pendiente", f"{rid}: Rendición enviada. Esperando aprobación de Catalina Vergara.")
 
             create_rendicion(rid, nueva)
-            st.success(f"✅ Rendición **{rid}** enviada exitosamente. Estado: **{nueva['estado']}**")
+            st.success(f"Rendición **{rid}** enviada exitosamente. Estado: **{nueva['estado']}**")
             st.info("La supervisora Catalina Vergara ha sido notificada.")

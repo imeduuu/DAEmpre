@@ -46,7 +46,7 @@ def main():
     elif vista == "Finanzas":
         render_vista_rol(
             rol="finanzas",
-            titulo="🔎 Vista Analista de Finanzas — Mario Leal",
+            titulo="Vista Analista de Finanzas — Mario Leal",
             descripcion="Verifica validez tributaria en SII, legibilidad e integridad del documento.",
             estados_visibles=["Aprobado"]
         )
@@ -54,7 +54,7 @@ def main():
     elif vista == "Tesorera":
         render_vista_rol(
             rol="tesorera",
-            titulo="🏦 Vista Tesorera — Rosa Pinto",
+            titulo="Vista Tesorera — Rosa Pinto",
             descripcion="Ejecuta reembolsos. Gestiona cola de pagos por falta de liquidez (BR-10).",
             estados_visibles=["Autorizado", "En Cola de Pago"]
         )

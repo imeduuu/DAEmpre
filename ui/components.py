@@ -11,9 +11,9 @@ def render_sidebar():
 
     notifs = unread_count()
     menu_items = {
-        "📊 Dashboard": "Dashboard",
-        "➕ Nueva Rendición": "Nueva Rendición",
-        f"📋 Mis Rendiciones": "Mis Rendiciones",
+        "Dashboard": "Dashboard",
+        "Nueva Rendición": "Nueva Rendición",
+        f"Mis Rendiciones": "Mis Rendiciones",
     }
     st.sidebar.markdown("**EMPLEADO**")
     for label, vista in menu_items.items():
@@ -25,8 +25,8 @@ def render_sidebar():
     st.sidebar.markdown("**OTROS ROLES**")
     roles = {
         "✔️ Supervisora (Catalina)": "Supervisora",
-        "🔎 Finanzas (Mario)": "Finanzas",
-        "🏦 Tesorera (Rosa)": "Tesorera",
+        "Finanzas (Mario)": "Finanzas",
+        "Tesorera (Rosa)": "Tesorera",
         "👔 Gerencia (Finanzas)": "Gerencia",
     }
     for label, vista in roles.items():
@@ -41,7 +41,7 @@ def render_sidebar():
         st.rerun()
 
     st.sidebar.markdown("---")
-    st.sidebar.markdown("**👤 Francisco Benavides**")
+    st.sidebar.markdown("**Francisco Benavides**")
     st.sidebar.caption("Ingeniero de Terreno")
 
 def render_estado_badge(estado: str):
@@ -73,11 +73,11 @@ def render_alert_warning(text: str):
 
 def render_alert_error(text: str):
     """Render error alert"""
-    st.markdown(f"<div class='alert-error'>❌ {text}</div>", unsafe_allow_html=True)
+    st.markdown(f"<div class='alert-error'>{text}</div>", unsafe_allow_html=True)
 
 def render_alert_success(text: str):
     """Render success alert"""
-    st.markdown(f"<div class='alert-success'>✅ {text}</div>", unsafe_allow_html=True)
+    st.markdown(f"<div class='alert-success'>{text}</div>", unsafe_allow_html=True)
 
 def render_alert_info(text: str):
     """Render info alert"""

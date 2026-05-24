@@ -4,7 +4,7 @@ from models.constants import ESTADO_COLOR, ESTADO_ICON
 
 def render_dashboard():
     """Render main dashboard view"""
-    st.title("📊 Dashboard")
+    st.title("Dashboard")
     rends = st.session_state.rendiciones
 
     # Calculate statistics
@@ -20,18 +20,18 @@ def render_dashboard():
     col1, col2, col3, col4 = st.columns(4)
     with col1:
         n = sum(1 for r in rends.values() if r["estado"] in ("Pagado", "Finalizado"))
-        st.metric("✅ Finalizadas / Pagadas", n)
+        st.metric("Finalizadas / Pagadas", n)
     with col2:
         n = sum(1 for r in rends.values() if r["estado"] in ("Pendiente", "Aprobado", "Autorizado", "Pend. Gerencia", "En Cola de Pago", "Borrador"))
-        st.metric("⏳ En proceso", n)
+        st.metric("En proceso", n)
     with col3:
         n = sum(1 for r in rends.values() if r["estado"] in ("Rechazado", "Cancelado"))
-        st.metric("❌ Rechazadas / Canceladas", n)
+        st.metric("Rechazadas / Canceladas", n)
     with col4:
-        st.metric("💰 Total reembolsado", fmt_monto(total_pagado))
+        st.metric("Total reembolsado", fmt_monto(total_pagado))
 
     st.markdown("---")
-    st.subheader("📌 Flujo principal del proceso")
+    st.subheader("Flujo principal del proceso")
 
     # Process flow
     flujo = ["Borrador", "Pendiente", "Aprobado", "Autorizado", "Pagado", "Finalizado"]
@@ -52,7 +52,7 @@ def render_dashboard():
     st.caption("⚠ Excepciones: Observado → Borrador (máx 3 intentos) · Pend. Gerencia (monto > $500.000) · En Cola de Pago (sin liquidez)")
 
     st.markdown("---")
-    st.subheader("📋 Rendiciones recientes")
+    st.subheader("Rendiciones recientes")
     
     # Recent rendiciones
     recientes = sorted(rends.values(), key=lambda x: x["historial"][-1]["fecha"], reverse=True)[:5]

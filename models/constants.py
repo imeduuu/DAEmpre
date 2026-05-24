@@ -14,17 +14,17 @@ ESTADO_COLOR = {
 }
 
 ESTADO_ICON = {
-    "Borrador":       "📝",
-    "Pendiente":      "⏳",
-    "Aprobado":       "✅",
-    "Observado":      "🔍",
-    "Autorizado":     "🔐",
-    "Pend. Gerencia": "🏦",
-    "En Cola de Pago":"⏰",
-    "Pagado":         "💸",
-    "Finalizado":     "🎉",
-    "Rechazado":      "❌",
-    "Cancelado":      "🚫",
+    "Borrador":       "",
+    "Pendiente":      "",
+    "Aprobado":       "",
+    "Observado":      "",
+    "Autorizado":     "",
+    "Pend. Gerencia": "",
+    "En Cola de Pago":"",
+    "Pagado":         "",
+    "Finalizado":     "",
+    "Rechazado":      "",
+    "Cancelado":      "",
 }
 
 # Notification types

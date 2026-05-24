@@ -32,7 +32,7 @@ def reset_database():
         create_notificacion(notif)
     print(f"  → {len(notifs)} notifications loaded")
     
-    print("✅ Database reset completed successfully!")
+    print("Database reset completed successfully!")
 
 if __name__ == "__main__":
     reset_database()

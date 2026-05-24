@@ -46,10 +46,10 @@ Almacena todas las notificaciones.
 
 ## Features
 
-✅ **Datos persistentes**: Los datos sobreviven al reiniciar la app  
-✅ **Auto-guardar**: Cada cambio se guarda automáticamente en BD  
-✅ **Demo data**: Carga datos de demostración en primera ejecución  
-✅ **Reset script**: Script para reinicializar la BD con datos demo  
+**Datos persistentes**: Los datos sobreviven al reiniciar la app  
+**Auto-guardar**: Cada cambio se guarda automáticamente en BD  
+**Demo data**: Carga datos de demostración en primera ejecución  
+**Reset script**: Script para reinicializar la BD con datos demo  
 
 ## How to Use
 
@@ -116,7 +116,7 @@ Service Layer (services/rendicion_service.py)
     ↓
 Session State (memory) + Database (SQLite)
     ↓
-Persistence ✅
+Persistence
 ```
 
 ## Important Notes

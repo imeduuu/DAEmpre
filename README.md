@@ -57,7 +57,7 @@ Se abrirá automáticamente en tu navegador en `http://localhost:8501`
 ## Casos de prueba disponibles
 
 Los datos de demostración incluyen:
-- **TX-001**: Almuerzo $42.300 → Finalizado ✅
+- **TX-001**: Almuerzo $42.300 → Finalizado
 - **TX-002**: Hospedaje $68.000 → Observado (imagen ilegible)
 - **TX-003**: Equipo $620.000 → Pend. Gerencia (BR-05)
 - **TX-004**: Taxi $12.500 → En Cola de Pago (sin liquidez)

@@ -20,11 +20,11 @@ def render_detalle_rendicion(r: Rendicion, rol: str = "rendidor"):
     )
 
     st.markdown(f"**Descripción:** {r['descripcion']}")
-    st.caption(f"📅 Fecha comprobante: {r['fecha_comprobante']} · 📎 Archivo: {r['archivo']} · 👤 Rendidor: {r['rendidor']}")
+    st.caption(f"Fecha comprobante: {r['fecha_comprobante']} · Archivo: {r['archivo']} · Rendidor: {r['rendidor']}")
 
     if r["observaciones"]:
         for obs in r["observaciones"]:
-            st.markdown(f"<div class='alert-warning'>🔍 <b>Observación:</b> {obs}</div>", unsafe_allow_html=True)
+            st.markdown(f"<div class='alert-warning'><b>Observación:</b> {obs}</div>", unsafe_allow_html=True)
 
     # Actions based on role and estado
     st.markdown("---")

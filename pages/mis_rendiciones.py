@@ -5,7 +5,7 @@ from pages.detalle_rendicion import render_detalle_rendicion
 
 def render_mis_rendiciones():
     """Render user's rendiciones list"""
-    st.title("📋 Mis Rendiciones")
+    st.title("Mis Rendiciones")
 
     rends = st.session_state.rendiciones
     todos_estados = ["Todas"] + list(dict.fromkeys(r["estado"] for r in rends.values()))
