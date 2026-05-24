@@ -1,0 +1,112 @@
+from models.types import Rendicion
+
+def get_demo_data() -> dict[str, Rendicion]:
+    """Returns demo rendiciones data"""
+    return {
+        "TX-001": {
+            "id": "TX-001",
+            "descripcion": "Almuerzo de trabajo con proveedor durante comisión Concepción",
+            "categoria": "Alimentación",
+            "monto": 42300,
+            "fecha_comprobante": "2025-05-10",
+            "fecha_envio": "2025-05-12 09:14",
+            "estado": "Finalizado",
+            "rendidor": "Francisco Benavides",
+            "archivo": "boleta_restaurante.jpg",
+            "observaciones": [],
+            "historial": [
+                {"estado": "Borrador",   "actor": "Francisco Benavides", "fecha": "2025-05-12 09:10", "nota": "Rendición creada"},
+                {"estado": "Pendiente",  "actor": "Sistema",             "fecha": "2025-05-12 09:14", "nota": "Validaciones OK. Notificada supervisora."},
+                {"estado": "Aprobado",   "actor": "Catalina Vergara",    "fecha": "2025-05-12 11:30", "nota": "Pertinencia operativa confirmada."},
+                {"estado": "Autorizado", "actor": "Mario Leal",          "fecha": "2025-05-13 10:05", "nota": "Boleta válida en SII. Monto coincide."},
+                {"estado": "Pagado",     "actor": "Rosa Pinto",          "fecha": "2025-05-14 09:00", "nota": "Transferencia ejecutada. Comprobante bancario subido."},
+                {"estado": "Finalizado", "actor": "Sistema",             "fecha": "2025-05-14 09:01", "nota": "Proceso cerrado. Archivado en solo lectura."},
+            ],
+            "intentos_correccion": 0,
+        },
+        "TX-002": {
+            "id": "TX-002",
+            "descripcion": "Hospedaje una noche hotel Concepción, comisión técnica",
+            "categoria": "Hospedaje",
+            "monto": 68000,
+            "fecha_comprobante": "2025-05-10",
+            "fecha_envio": "2025-05-12 09:20",
+            "estado": "Observado",
+            "rendidor": "Francisco Benavides",
+            "archivo": "factura_hotel_borrosa.jpg",
+            "observaciones": ["Imagen ilegible, resubir factura con foco y sin sombras."],
+            "historial": [
+                {"estado": "Borrador",  "actor": "Francisco Benavides", "fecha": "2025-05-12 09:18", "nota": "Rendición creada"},
+                {"estado": "Pendiente", "actor": "Sistema",             "fecha": "2025-05-12 09:20", "nota": "Validaciones OK."},
+                {"estado": "Aprobado",  "actor": "Catalina Vergara",    "fecha": "2025-05-12 11:35", "nota": "Pertinencia operativa confirmada."},
+                {"estado": "Observado", "actor": "Mario Leal",          "fecha": "2025-05-13 10:15", "nota": "Imagen ilegible, resubir factura con foco y sin sombras."},
+            ],
+            "intentos_correccion": 1,
+        },
+        "TX-003": {
+            "id": "TX-003",
+            "descripcion": "Equipo de medición láser para faena norte proyecto 2025",
+            "categoria": "Equipamiento",
+            "monto": 620000,
+            "fecha_comprobante": "2025-05-11",
+            "fecha_envio": "2025-05-13 08:00",
+            "estado": "Pend. Gerencia",
+            "rendidor": "Francisco Benavides",
+            "archivo": "factura_equipo.pdf",
+            "observaciones": [],
+            "historial": [
+                {"estado": "Borrador",        "actor": "Francisco Benavides", "fecha": "2025-05-13 07:55", "nota": "Rendición creada"},
+                {"estado": "Pendiente",       "actor": "Sistema",             "fecha": "2025-05-13 08:00", "nota": "Validaciones OK. Notificada supervisora."},
+                {"estado": "Aprobado",        "actor": "Catalina Vergara",    "fecha": "2025-05-13 09:10", "nota": "Equipo corresponde al proyecto de faena."},
+                {"estado": "Pend. Gerencia",  "actor": "Sistema",             "fecha": "2025-05-13 09:11", "nota": "Monto $620.000 supera umbral BR-05. Escalado a Gerencia."},
+            ],
+            "intentos_correccion": 0,
+        },
+        "TX-004": {
+            "id": "TX-004",
+            "descripcion": "Taxi app desde aeropuerto a oficina central post viaje",
+            "categoria": "Transporte",
+            "monto": 12500,
+            "fecha_comprobante": "2025-05-11",
+            "fecha_envio": "2025-05-13 08:10",
+            "estado": "En Cola de Pago",
+            "rendidor": "Francisco Benavides",
+            "archivo": "comprobante_taxi.jpg",
+            "observaciones": [],
+            "historial": [
+                {"estado": "Borrador",      "actor": "Francisco Benavides", "fecha": "2025-05-13 08:08", "nota": "Rendición creada"},
+                {"estado": "Pendiente",     "actor": "Sistema",             "fecha": "2025-05-13 08:10", "nota": "Validaciones OK."},
+                {"estado": "Aprobado",      "actor": "Catalina Vergara",    "fecha": "2025-05-13 09:20", "nota": "Gasto de transporte pertinente."},
+                {"estado": "Autorizado",    "actor": "Mario Leal",          "fecha": "2025-05-14 10:00", "nota": "Comprobante válido en SII."},
+                {"estado": "En Cola de Pago", "actor": "Rosa Pinto",        "fecha": "2025-05-15 09:00", "nota": "Sin liquidez en caja esta semana. Fecha estimada: 3 días hábiles."},
+            ],
+            "intentos_correccion": 0,
+        },
+        "TX-005": {
+            "id": "TX-005",
+            "descripcion": "Suscripción software personal no relacionada con trabajo",
+            "categoria": "Otro",
+            "monto": 15000,
+            "fecha_comprobante": "2025-05-08",
+            "fecha_envio": "2025-05-09 14:00",
+            "estado": "Rechazado",
+            "rendidor": "Francisco Benavides",
+            "archivo": "boleta_software.jpg",
+            "observaciones": ["Gasto no corresponde a actividad laboral de la empresa."],
+            "historial": [
+                {"estado": "Borrador",   "actor": "Francisco Benavides", "fecha": "2025-05-09 13:55", "nota": "Rendición creada"},
+                {"estado": "Pendiente",  "actor": "Sistema",             "fecha": "2025-05-09 14:00", "nota": "Validaciones OK."},
+                {"estado": "Rechazado",  "actor": "Catalina Vergara",    "fecha": "2025-05-09 16:00", "nota": "Gasto no corresponde a actividad laboral de la empresa."},
+            ],
+            "intentos_correccion": 0,
+        },
+    }
+
+def get_demo_notifications():
+    """Returns demo notifications data"""
+    return [
+        {"tipo": "observado",  "msg": "TX-002: Mario Leal observó tu rendición de hospedaje.", "leida": False},
+        {"tipo": "cola",       "msg": "TX-004: Sin liquidez en Tesorería. Pago en cola ~3 días.", "leida": False},
+        {"tipo": "gerencia",   "msg": "TX-003: Escalada a Gerencia de Finanzas por monto > $500.000.", "leida": False},
+        {"tipo": "finalizado", "msg": "TX-001: ¡Reembolso de $42.300 depositado exitosamente!", "leida": True},
+    ]
