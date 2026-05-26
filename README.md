@@ -24,8 +24,8 @@ Se abrirá automáticamente en tu navegador en `http://localhost:8501`
 
 ## Recorrido principal cubierto (Caso A — Camino Ideal)
 
-1. **Nueva Rendición** → Francisco crea y envía la rendición
-2. **Vista Supervisora** (Catalina Vergara) → Aprueba pertinencia operativa
+1. **Nueva Rendición** → Tomás crea y envía la rendición
+2. **Vista Supervisora** (Camila Fuentes) → Aprueba pertinencia operativa
 3. **Vista Finanzas** (Mario Leal) → Autoriza validez tributaria
 4. **Vista Tesorera** (Rosa Pinto) → Ejecuta el pago
 

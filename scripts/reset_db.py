@@ -24,13 +24,13 @@ def reset_database():
     rends = get_demo_data()
     for rid, rend in rends.items():
         create_rendicion(rend)
-    print(f"  → {len(rends)} rendiciones loaded")
+    print(f"  -> {len(rends)} rendiciones loaded")
     
     print("Loading demo notifications...")
     notifs = get_demo_notifications()
     for notif in notifs:
         create_notificacion(notif)
-    print(f"  → {len(notifs)} notifications loaded")
+    print(f"  -> {len(notifs)} notifications loaded")
     
     print("Database reset completed successfully!")
 

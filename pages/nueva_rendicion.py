@@ -1,6 +1,7 @@
 import streamlit as st
 from datetime import date, datetime
 import uuid
+import os
 from utils.formatters import fmt_monto
 from services.rendicion_service import add_historial, add_notif, create_rendicion
 from models.constants import DESCRIPCION_MIN_CHARS, DIAS_PLAZO_COMPROBANTE, MONTO_UMBRAL_GERENCIA
@@ -9,6 +10,11 @@ def render_nueva():
     """Render new rendicion form"""
     st.title("➕ Nueva Rendición de Gasto")
     st.caption("Completa los campos para registrar tu comprobante de gasto.")
+
+    # Get active user from state or default to Tomás Alarcón
+    user_name = "Tomás Alarcón"
+    if "usuario" in st.session_state and st.session_state.usuario:
+        user_name = st.session_state.usuario["nombre"]
 
     with st.form("form_nueva", clear_on_submit=False):
         col1, col2 = st.columns(2)
@@ -81,9 +87,17 @@ def render_nueva():
             for e in errores:
                 st.error(e)
         else:
-            # Create rendicion
+            # Create rendicion ID
             rid = f"TX-{str(uuid.uuid4())[:4].upper()}"
             ts = datetime.now().strftime("%Y-%m-%d %H:%M")
+            
+            # Save file physically in data/comprobantes
+            os.makedirs("data/comprobantes", exist_ok=True)
+            safe_filename = f"{rid}_{archivo.name}"
+            file_path = os.path.join("data/comprobantes", safe_filename)
+            with open(file_path, "wb") as f:
+                f.write(archivo.getbuffer())
+
             nueva = {
                 "id": rid,
                 "descripcion": descripcion.strip(),
@@ -92,12 +106,12 @@ def render_nueva():
                 "fecha_comprobante": str(fecha_comp),
                 "fecha_envio": ts,
                 "estado": "Pendiente",
-                "rendidor": "Francisco Benavides",
-                "archivo": archivo.name if archivo else "comprobante.jpg",
+                "rendidor": user_name,
+                "archivo": safe_filename,
                 "observaciones": [],
                 "historial": [
-                    {"estado": "Borrador", "actor": "Francisco Benavides", "fecha": ts, "nota": "Rendición creada y validada localmente."},
-                    {"estado": "Pendiente", "actor": "Sistema", "fecha": ts, "nota": "Validaciones OK (BR-06, BR-07). Notificada supervisora Catalina Vergara."},
+                    {"estado": "Borrador", "actor": user_name, "fecha": ts, "nota": "Rendición creada y validada localmente y comprobante guardado físicamente."},
+                    {"estado": "Pendiente", "actor": "Sistema", "fecha": ts, "nota": "Validaciones OK (BR-06, BR-07). Notificada supervisora Camila Fuentes."},
                 ],
                 "intentos_correccion": 0,
             }
@@ -117,8 +131,8 @@ def render_nueva():
                 nueva["historial"][1]["nota"] += " BR-05: Monto > $500.000, requerirá aprobación de Gerencia tras Supervisora."
                 add_notif("warning", f"{rid}: Monto {fmt_monto(monto)} > $500.000 detectado.")
             else:
-                add_notif("pendiente", f"{rid}: Rendición enviada. Esperando aprobación de Catalina Vergara.")
+                add_notif("pendiente", f"{rid}: Rendición enviada. Esperando aprobación de Camila Fuentes.")
 
             create_rendicion(rid, nueva)
             st.success(f"Rendición **{rid}** enviada exitosamente. Estado: **{nueva['estado']}**")
-            st.info("La supervisora Catalina Vergara ha sido notificada.")
+            st.info("La supervisora Camila Fuentes ha sido notificada.")

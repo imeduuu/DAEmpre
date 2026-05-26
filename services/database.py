@@ -48,9 +48,70 @@ def init_db():
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)
+
+    # Create usuarios table
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS usuarios (
+            username TEXT PRIMARY KEY,
+            password TEXT NOT NULL,
+            nombre TEXT NOT NULL,
+            rol TEXT NOT NULL,
+            cargo TEXT NOT NULL,
+            avatar TEXT NOT NULL
+        )
+    """)
+    
+    # Prepopulate users if empty
+    cursor.execute("SELECT COUNT(*) FROM usuarios")
+    if cursor.fetchone()[0] == 0:
+        demo_users = [
+            ("tomas", "1234", "Tomás Alarcón", "rendidor", "Ingeniero de Terreno", "👷"),
+            ("camila", "1234", "Camila Fuentes", "supervisora", "Supervisora Operativa", "👩‍💼"),
+            ("mario", "1234", "Mario Leal", "finanzas", "Analista de Finanzas", "👨‍💻"),
+            ("rosa", "1234", "Rosa Pinto", "tesorera", "Tesorera", "👩‍🔬"),
+            ("gerente", "1234", "Gerente de Finanzas", "gerencia", "Gerencia de Finanzas", "👔")
+        ]
+        cursor.executemany("""
+            INSERT INTO usuarios (username, password, nombre, rol, cargo, avatar)
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, demo_users)
     
     conn.commit()
     conn.close()
+
+def validate_credentials(username: str, password: str) -> Optional[dict]:
+    """Validate credentials and return user info if correct"""
+    init_db()
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM usuarios WHERE username = ? AND password = ?", (username.strip().lower(), password))
+    row = cursor.fetchone()
+    conn.close()
+    if row:
+        return dict(row)
+    return None
+
+def get_usuario(username: str) -> Optional[dict]:
+    """Get user by username"""
+    init_db()
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM usuarios WHERE username = ?", (username.strip().lower(),))
+    row = cursor.fetchone()
+    conn.close()
+    if row:
+        return dict(row)
+    return None
+
+def get_all_usuarios() -> list[dict]:
+    """Get all registered users"""
+    init_db()
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM usuarios")
+    rows = cursor.fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
 
 def get_all_rendiciones() -> dict[str, Rendicion]:
     """Get all rendiciones from database"""
@@ -249,6 +310,7 @@ def clear_all_data():
     
     cursor.execute("DELETE FROM rendiciones")
     cursor.execute("DELETE FROM notificaciones")
+    cursor.execute("DELETE FROM usuarios")
     
     conn.commit()
     conn.close()

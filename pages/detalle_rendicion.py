@@ -1,4 +1,5 @@
 import streamlit as st
+import os
 from models.types import Rendicion
 from utils.formatters import fmt_monto, get_estado_color
 from models.constants import ESTADO_COLOR, ESTADO_ICON
@@ -6,7 +7,7 @@ from ui.components import render_timeline_item
 from pages.acciones import render_acciones
 
 def render_detalle_rendicion(r: Rendicion, rol: str = "rendidor"):
-    """Render detailed view of a rendicion"""
+    """Render detailed view of a rendicion with real download button"""
     color = ESTADO_COLOR.get(r["estado"], "#94a3b8")
     st.markdown(f"### 📄 Detalle · `{r['id']}`")
 
@@ -21,6 +22,24 @@ def render_detalle_rendicion(r: Rendicion, rol: str = "rendidor"):
 
     st.markdown(f"**Descripción:** {r['descripcion']}")
     st.caption(f"Fecha comprobante: {r['fecha_comprobante']} · Archivo: {r['archivo']} · Rendidor: {r['rendidor']}")
+
+    # Physical file download integration
+    file_path = os.path.join("data", "comprobantes", r["archivo"])
+    if os.path.exists(file_path):
+        try:
+            with open(file_path, "rb") as f:
+                file_bytes = f.read()
+            st.download_button(
+                label="📥 Descargar Comprobante Real (Persistido en Disco)",
+                data=file_bytes,
+                file_name=r["archivo"],
+                mime="application/octet-stream",
+                use_container_width=True
+            )
+        except Exception as e:
+            st.error(f"Error al leer el archivo de comprobante: {str(e)}")
+    else:
+        st.info("ℹ️ Comprobante de demostración pre-cargado. (El archivo físico no se encuentra en el disco, disponible solo en cargas nuevas).")
 
     if r["observaciones"]:
         for obs in r["observaciones"]:

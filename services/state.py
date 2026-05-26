@@ -33,3 +33,5 @@ def init_state():
         st.session_state.selected_id = None
     if "vista" not in st.session_state:
         st.session_state.vista = "Dashboard"
+    if "usuario" not in st.session_state:
+        st.session_state.usuario = None
