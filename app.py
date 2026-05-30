@@ -7,11 +7,11 @@ import streamlit as st
 from config.styles import setup_page_config, setup_custom_css
 from services.state import init_state
 from ui.components import render_sidebar
-from pages.dashboard import render_dashboard
-from pages.nueva_rendicion import render_nueva
-from pages.mis_rendiciones import render_mis_rendiciones
-from pages.vista_rol import render_vista_rol
-from pages.notificaciones import render_notificaciones
+from views.dashboard import render_dashboard
+from views.nueva_rendicion import render_nueva
+from views.mis_rendiciones import render_mis_rendiciones
+from views.vista_rol import render_vista_rol
+from views.notificaciones import render_notificaciones
 
 def render_login():
     """Render an ultra-premium glassmorphic login screen for corporate intranet"""

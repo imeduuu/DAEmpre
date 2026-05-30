@@ -4,7 +4,7 @@ from models.types import Rendicion
 from utils.formatters import fmt_monto, get_estado_color
 from models.constants import ESTADO_COLOR, ESTADO_ICON
 from ui.components import render_timeline_item
-from pages.acciones import render_acciones
+from views.acciones import render_acciones
 
 def render_detalle_rendicion(r: Rendicion, rol: str = "rendidor"):
     """Render detailed view of a rendicion with real download button"""

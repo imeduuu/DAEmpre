@@ -1,7 +1,7 @@
 import streamlit as st
 from utils.formatters import fmt_monto
 from models.constants import ESTADO_COLOR, ESTADO_ICON
-from pages.detalle_rendicion import render_detalle_rendicion
+from views.detalle_rendicion import render_detalle_rendicion
 
 def render_mis_rendiciones():
     """Render user's rendiciones list in premium card interface"""

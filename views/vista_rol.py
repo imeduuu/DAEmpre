@@ -1,7 +1,7 @@
 import streamlit as st
 from utils.formatters import fmt_monto
 from models.constants import ESTADO_COLOR, ESTADO_ICON
-from pages.detalle_rendicion import render_detalle_rendicion
+from views.detalle_rendicion import render_detalle_rendicion
 
 def render_vista_rol(rol: str, titulo: str, descripcion: str, estados_visibles: list[str]):
     """Render premium role-based workflow queue"""
