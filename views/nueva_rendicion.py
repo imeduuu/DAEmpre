@@ -5,6 +5,7 @@ import os
 from utils.formatters import fmt_monto
 from services.rendicion_service import add_historial, add_notif, create_rendicion
 from models.constants import DESCRIPCION_MIN_CHARS, DIAS_PLAZO_COMPROBANTE, MONTO_UMBRAL_GERENCIA
+MAX_COMPROBANTE_BYTES = 10 * 1024 * 1024  # 10 MB
 
 def render_nueva():
     """Render new rendicion form"""
@@ -69,6 +70,13 @@ def render_nueva():
 
         if archivo is None:
             errores.append("Debes adjuntar el comprobante.")
+        else:
+            try:
+                size = archivo.size
+            except Exception:
+                size = len(archivo.getbuffer())
+            if size > MAX_COMPROBANTE_BYTES:
+                errores.append("El comprobante excede el tamaño máximo permitido (10 MB).")
 
         # BR-09: fecha dentro de plazo
         dias_dif = (date.today() - fecha_comp).days

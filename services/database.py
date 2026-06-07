@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 from typing import Optional
 from models.types import Rendicion, Notificacion
+from werkzeug.security import generate_password_hash, check_password_hash
 
 # Database path
 DB_PATH = Path(__file__).parent.parent / "data" / "gastos.db"
@@ -61,16 +62,25 @@ def init_db():
         )
     """)
     
-    # Prepopulate users if empty
+    # Prepopulate users if empty (store hashed passwords)
     cursor.execute("SELECT COUNT(*) FROM usuarios")
     if cursor.fetchone()[0] == 0:
-        demo_users = [
+        raw_users = [
             ("tomas", "1234", "Tomás Alarcón", "rendidor", "Ingeniero de Terreno", "👷"),
             ("camila", "1234", "Camila Fuentes", "supervisora", "Supervisora Operativa", "👩‍💼"),
             ("mario", "1234", "Mario Leal", "finanzas", "Analista de Finanzas", "👨‍💻"),
             ("rosa", "1234", "Rosa Pinto", "tesorera", "Tesorera", "👩‍🔬"),
             ("gerente", "1234", "Gerente de Finanzas", "gerencia", "Gerencia de Finanzas", "👔")
         ]
+        demo_users = [(
+            u[0],
+            generate_password_hash(u[1]),
+            u[2],
+            u[3],
+            u[4],
+            u[5]
+        ) for u in raw_users]
+
         cursor.executemany("""
             INSERT INTO usuarios (username, password, nombre, rol, cargo, avatar)
             VALUES (?, ?, ?, ?, ?, ?)
@@ -84,11 +94,13 @@ def validate_credentials(username: str, password: str) -> Optional[dict]:
     init_db()
     conn = get_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM usuarios WHERE username = ? AND password = ?", (username.strip().lower(), password))
+    cursor.execute("SELECT * FROM usuarios WHERE username = ?", (username.strip().lower(),))
     row = cursor.fetchone()
     conn.close()
-    if row:
-        return dict(row)
+    if row and check_password_hash(row['password'], password):
+        user = dict(row)
+        user.pop('password', None)
+        return user
     return None
 
 def get_usuario(username: str) -> Optional[dict]:
@@ -100,7 +112,9 @@ def get_usuario(username: str) -> Optional[dict]:
     row = cursor.fetchone()
     conn.close()
     if row:
-        return dict(row)
+        user = dict(row)
+        user.pop('password', None)
+        return user
     return None
 
 def get_all_usuarios() -> list[dict]:
@@ -111,7 +125,12 @@ def get_all_usuarios() -> list[dict]:
     cursor.execute("SELECT * FROM usuarios")
     rows = cursor.fetchall()
     conn.close()
-    return [dict(r) for r in rows]
+    users = []
+    for r in rows:
+        u = dict(r)
+        u.pop('password', None)
+        users.append(u)
+    return users
 
 def get_all_rendiciones() -> dict[str, Rendicion]:
     """Get all rendiciones from database"""
